@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'campo_input.dart'; // Importa o campo que está na mesma pasta
-import 'cadastro_service.dart'; // Importa o serviço que está na mesma pasta
+import 'campo_input.dart';
+import 'cadastro_service.dart';
+// 1. IMPORTANTE: Importe o arquivo da lista que está dentro da pasta lista
+import 'lista/lista_page.dart';
 
 class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
@@ -38,7 +40,23 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro - Pasta Única')),
+      appBar: AppBar(
+        title: const Text('Cadastro - Pasta Única'),
+        // 2. ADICIONANDO O BOTÃO NO APPBAR
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.format_list_bulleted), // Ícone de lista
+            tooltip: 'Ver Clientes',
+            onPressed: () {
+              // Comando para navegar para a página de lista
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ListaPage()),
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -58,6 +76,12 @@ class _CadastroPageState extends State<CadastroPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: realizarCadastro,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(
+                  double.infinity,
+                  50,
+                ), // Botão ocupa largura total
+              ),
               child: const Text('SALVAR CLIENTE'),
             ),
           ],
