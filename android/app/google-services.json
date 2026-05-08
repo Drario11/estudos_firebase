@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53845814675",
+    "project_id": "estudos-ca116",
+    "storage_bucket": "estudos-ca116.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53845814675:android:67f84230a8b4b68de24c66",
+        "android_client_info": {
+          "package_name": "com.example.estudos_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBraTwyRLQaEsNy9rXkW9gdzuU0-fHrveQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
