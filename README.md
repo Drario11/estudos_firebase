@@ -1,54 +1,49 @@
-# Sistema Dario - Gestão de Clientes & Vigilância Inteligente
+# Sistema Dario - Arquitetura Base Flutter & Firebase
 
-Este é um projeto de arquitetura inicial utilizando **Flutter Web** integrado ao **Firebase**. O objetivo principal é servir como uma estrutura base para um modelo de negócio **WaaS (Website as a Service)**, focado em microempreendedores e sistemas de prevenção de perdas no varejo.
+Este repositório contém a estrutura inicial de um projeto Web desenvolvido em **Flutter**, totalmente integrado ao ecossistema **Firebase**. O foco deste estágio foi estabelecer uma comunicação segura entre o frontend e os serviços de nuvem da Google.
 
-## 🚀 Status do Projeto: Online e Funcional
-O projeto já passou pela fase de configuração de infraestrutura e está hospedado oficialmente no **Firebase Hosting**.
+## 🛠️ O que foi implementado até agora
 
-**🔗 Link para Teste:** [https://estudos-ca116.web.app](https://estudos-ca116.web.app)
+### 1. Autenticação de Usuários (Firebase Auth)
+- Configuração do provedor de login por **E-mail e Senha**.
+- Fluxo de criação de conta integrado ao formulário de cadastro.
+- Garantia de que cada usuário possua um Identificador Único (**UID**) para segurança dos dados.
 
----
+### 2. Persistência de Dados (Cloud Firestore)
+- Estruturação da coleção `clientes` no banco de dados NoSQL.
+- Implementação de vínculo direto: os dados do perfil do cliente são salvos no banco utilizando o mesmo `UID` gerado na autenticação.
+- Campos implementados: Nome, E-mail, Telefone, Endereço e Data de Cadastro.
 
-## 🏗️ Arquitetura e Tecnologias
+### 3. Componentização de UI
+- Criação de componentes reutilizáveis como o `CampoInput`, que trata automaticamente campos de texto e campos de senha (com ocultação de caracteres).
+- Layout responsivo para navegação via Web.
 
-O projeto utiliza uma arquitetura moderna e escalável:
-
-- **Frontend:** Flutter (Framework focado em performance e UI).
-- **Backend (BaaS):** Google Firebase.
-  - **Authentication:** Gerenciamento seguro de usuários e senhas.
-  - **Cloud Firestore:** Banco de dados NoSQL em tempo real para armazenamento de perfis.
-  - **Hosting:** Distribuição global do Web App via CDN do Google.
-- **Integração:** Arquitetura desacoplada onde o `CadastroService` gerencia a comunicação entre a UI e o Banco de Dados.
-
----
-
-## ✅ Acertos e Marcos Alcançados
-
-1.  **Vínculo Auth + Banco:** Implementação bem-sucedida da criação de documentos no Firestore utilizando o `UID` único do Firebase Authentication. Isso garante que cada cliente tenha seu próprio espaço seguro.
-2.  **Segurança de UI:** Customização do componente `CampoInput` para ocultar senhas e tratar diferentes tipos de entrada de dados.
-3.  **Configuração de Deploy:** Ajuste do pipeline de saída (`flutter build web`) e apontamento correto do diretório público no Firebase Hosting (`build/web`).
-4.  **SPA Ready:** Configuração de regras de reescrita no `firebase.json` para suportar Single Page Application, evitando erros 404 ao atualizar a página.
+### 4. Infraestrutura de Deploy (Firebase Hosting)
+- Configuração do pipeline de publicação.
+- Uso do comando `flutter build web` para gerar os ativos otimizados.
+- Configuração de regras de reescrita no `firebase.json` para garantir que o aplicativo funcione como uma SPA (Single Page Application).
 
 ---
 
-## 🛠️ Desafios Superados (Lições Aprendidas)
+## 🏗️ Arquitetura do Projeto
 
-Durante o desenvolvimento, foram identificados e corrigidos pontos críticos:
 
-- **Inicialização do Firebase:** Ajuste no `main.dart` para garantir que o motor do Flutter esteja pronto (`WidgetsFlutterBinding`) antes de conectar aos serviços do Google.
-- **Configuração de Provedores:** Ativação manual do provedor "E-mail/Senha" no console do Firebase para permitir o tráfego de autenticação.
-- **Alinhamento de Código:** Correção de propriedades de layout (`MainAxisAlignment`) para garantir a responsividade da tela de cadastro.
-- **Cache de Build:** Limpeza de cache via terminal (`flutter clean`) para garantir que as alterações de configuração do Firebase fossem refletidas no navegador.
+
+A lógica de comunicação está separada da interface, seguindo boas práticas:
+- **UI:** Telas de cadastro e listagem (`lib/cadastro/`).
+- **Service:** Camada de serviço que fala com o Firebase (`cadastro_service.dart`).
+- **Config:** Chaves de acesso ao projeto na nuvem (`firebase_options.dart`).
 
 ---
 
-## 📂 Estrutura de Pastas Inicial
+## 🚀 Como visualizar o resultado atual
 
-```text
-lib/
- ├── cadastro/
- │    ├── cadastro_page.dart    # UI do formulário de clientes
- │    ├── cadastro_service.dart # Lógica de negócio e regras Firebase
- │    └── campo_input.dart      # Componente visual reaproveitável
- ├── firebase_options.dart      # Chaves de conexão com o Google Cloud
- └── main.dart                  # Ponto de entrada e inicialização
+O projeto está publicado e pode ser acessado no link gerado pelo Firebase Hosting:
+👉 **[https://estudos-ca116.web.app](https://estudos-ca116.web.app)**
+
+---
+
+## 📝 Lições e Ajustes Técnicos Realizados
+- **Correção de Inicialização:** Implementado o `WidgetsFlutterBinding.ensureInitialized()` no `main.dart` para evitar falhas no carregamento do Firebase.
+- **Ajuste de Hosting:** Configurado o diretório público como `build/web` para refletir os arquivos compilados pelo Flutter.
+- **Segurança de Dados:** Decisão arquitetural de não salvar senhas em texto puro no banco de dados, utilizando exclusivamente o serviço de Auth do Firebase para esse fim.
